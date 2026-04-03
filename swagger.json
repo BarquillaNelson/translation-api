@@ -1,0 +1,504 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Translation API",
+    "description" : "",
+    "version" : "1.0.0"
+  },
+  "tags" : [ {
+    "name" : "Login"
+  }, {
+    "name" : "Translation Module"
+  } ],
+  "paths" : {
+    "/register" : {
+      "post" : {
+        "summary" : "Register",
+        "deprecated" : false,
+        "description" : "",
+        "tags" : [ "Login" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : { }
+              },
+              "example" : {
+                "name" : "Nelson Barquilla",
+                "email" : "nelson.barquilla@test.com",
+                "password" : "1",
+                "password_confirmation" : "1"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      }
+    },
+    "/login" : {
+      "post" : {
+        "summary" : "Login",
+        "deprecated" : false,
+        "description" : "",
+        "tags" : [ "Login" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : { }
+              },
+              "example" : {
+                "email" : "nelson.barquilla@test.com",
+                "password" : "1"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      }
+    },
+    "/logout" : {
+      "post" : {
+        "summary" : "Logout",
+        "deprecated" : false,
+        "description" : "",
+        "tags" : [ "Login" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "Bearer {{token}}",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : { }
+              },
+              "example" : ""
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      }
+    },
+    "/translations" : {
+      "get" : {
+        "summary" : "Translation - Index",
+        "deprecated" : false,
+        "description" : "",
+        "tags" : [ "Translation Module" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "Bearer {{token}}",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : { }
+              },
+              "example" : {
+                "search" : "",
+                "pages" : 50
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      },
+      "post" : {
+        "summary" : "Translation - Create",
+        "deprecated" : false,
+        "description" : "",
+        "tags" : [ "Translation Module" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "Bearer {{token}}",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : { }
+              },
+              "example" : {
+                "key" : "dashboard.user.greeting",
+                "content" : {
+                  "english" : "Good morning, User!",
+                  "french" : "Bonjour, l'utilisateur!",
+                  "espanol" : "¡Buenos días, Usuario!"
+                },
+                "tags" : [ "web", "mobile", "dashboard" ]
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      }
+    },
+    "/translations/2" : {
+      "get" : {
+        "summary" : "Translation - Show",
+        "deprecated" : false,
+        "description" : "",
+        "tags" : [ "Translation Module" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "Bearer {{token}}",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      }
+    },
+    "/translations/1" : {
+      "patch" : {
+        "summary" : "Translation - Update",
+        "deprecated" : false,
+        "description" : "",
+        "tags" : [ "Translation Module" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "Bearer {{token}}",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : { }
+              },
+              "example" : {
+                "content" : {
+                  "english" : "Good morning!",
+                  "german" : "Guten Morgen!"
+                }
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      },
+      "delete" : {
+        "summary" : "Translation - Delete",
+        "deprecated" : false,
+        "description" : "",
+        "tags" : [ "Translation Module" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "Bearer {{token}}",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : { },
+    "responses" : { },
+    "securitySchemes" : { }
+  },
+  "servers" : [ ],
+  "security" : [ ]
+}
