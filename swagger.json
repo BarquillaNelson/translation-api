@@ -325,6 +325,61 @@
         "security" : [ ]
       }
     },
+    "/translations/export" : {
+      "password_confirmation" : {
+        "summary" : "Translation - Export",
+        "deprecated" : false,
+        "description" : "Downloads a JSON file containing all cached translations grouped by locale.",
+        "tags" : [ "Translation Module" ],
+        "parameters" : [ {
+          "name" : "Content-Type",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Accept",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "application/json",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "example" : "Bearer {{token}}",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A downloadable JSON file",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                },
+                "example" : {
+                  "en" : {
+                    "dashboard.user.greeting" : "Good morning, User!"
+                  }
+                }
+              }
+            },
+            "headers" : { }
+          }
+        },
+        "security" : [ ]
+      }
+    },
     "/translations/2" : {
       "get" : {
         "summary" : "Translation - Show",
