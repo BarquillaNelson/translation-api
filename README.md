@@ -1,66 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Translation API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A robust RESTful API built with Laravel 10 for managing translations. This service provides endpoints for user registration, authentication, and comprehensive full CRUD (Create, Read, Update, Delete) management of translation records.
 
-## About Laravel
+## Setup Instructions
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project is fully containerized with Docker, meaning you do not need PHP, Composer, or MySQL installed directly on your host machine to run it.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Installation Steps
 
-## Learning Laravel
+1. **Clone the repository** (if you haven't already):
+   ```bash
+   git clone <your-repository-url>
+   cd translation-api
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Prepare Environment Files**:
+   The Docker container relies on the `.env.local` file for configuration. Copy the example file to set up your local environment:
+   ```bash
+   cp .env.example .env.local
+   cp .env.example .env
+   ```
+   *(Note: Ensure `APP_KEY` is populated in your `.env.local`. If it is blank, Laravel may throw a 500 error on the first run. You can generate one via `php artisan key:generate` or manually insert a 32-character base64 string.)*
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Build and Run the Containers**:
+   Execute the following command to build the image and start the services in detached mode:
+   ```bash
+   docker-compose up -d --build
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Automatic Initialization**:
+   Once the container starts, the `startup.sh` script handles everything automatically:
+   - Composer dependencies are installed during the image build.
+   - Database migrations are automatically executed against the MySQL container.
+   - Caches are cleared and storage permissions are automatically fixed.
 
-## Laravel Sponsors
+5. **Access the API**:
+   The API is now running and accessible at: **http://localhost:8080**
+   
+   *Example:*
+   ```bash
+   curl http://localhost:8080/
+   # Response: {"message": "API is running"}
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+---
 
-### Premium Partners
+## Architectural & Design Choices
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+The application was designed specifically for scalability, consistency, and maintaining a clean codebase. 
 
-## Contributing
+### 1. Framework: Laravel 10
+Laravel was chosen for its expressive routing, robust Eloquent ORM, and rapid API development capabilities. It drastically reduces development time by providing battle-tested implementations of database migrations, routing, and caching out of the box.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 2. Authentication: Laravel Sanctum
+**Sanctum** is implemented to provide lightweight, robust token-based authentication. Rather than using heavy JWT or OAuth2 protocols like Passport, Sanctum issues simple API tokens which are perfect for mobile applications or SPAs (Single Page Applications) communicating with the API. This keeps the auth flow fast and simple.
 
-## Code of Conduct
+### 3. Containerization: Docker & Supervisord
+The entire stack (PHP 8.2 FPM, Nginx, MySQL 8) is bundled using `docker-compose`. 
+- **Uniformity**: Eliminates the "it works on my machine" problem.
+- **Zero-Touch Startup**: A custom `startup.sh` automates the execution of schema migrations and permission updates upon every container boot. 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Controller Encapsulation & The `BaseController`
+Instead of duplicating `try/catch` and JSON response formatting logic across every controller method, a generic `executeFunction` wrapper is implemented in the `BaseController.php`.
+- **DRY (Don't Repeat Yourself)**: Controllers like `TranslationController` and `LoginController` solely contain business logic wrapped in anonymous functions.
+- **Consistency**: All API success and error responses are guaranteed to follow a uniform structural format.
 
-## Security Vulnerabilities
+### 5. Form Request Validation
+Validation logic is entirely decoupled from the HTTP Controllers by utilizing Laravel Form Requests (`TranslationRequest`, `LoginRequest`). This ensures that controllers remain thin, and invalid data is intercepted and returned to the user with a standardized 422 Unprocessable Entity response before the controller logic is even executed.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 6. Performance Optimization (Caching & Database Queries)
+To ensure the API responds with sub-millisecond latency under high load, aggressive caching and optimized database querying have been implemented:
+- **Eager Loading**: The Eloquent queries meticulously define select columns and strictly eager load relationships (`with(['values', 'tags'])`). This entirely prevents the N+1 query problem commonly found in ORM architectures.
+- **Cache Invalidation Strategy**: Index lists and specific translation queries are cached using `Cache::remember`. The model utilizes Laravel Eloquent boot events (`booted()`) to automatically track version changes and clear specifically related cache tags/keys upon resource creation, update, or deletion.
