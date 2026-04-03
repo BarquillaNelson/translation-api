@@ -46,6 +46,20 @@ This project is fully containerized with Docker, meaning you do not need PHP, Co
    # Response: {"message": "API is running"}
    ```
 
+6. **Running Unit Tests**:
+   The codebase includes an extensive suite of automated tests. You can natively run the internal test suite to verify code conditions by executing PHPUnit via Docker:
+   ```bash
+   docker-compose exec php php artisan test
+   ```
+
+---
+
+## API Documentation (Swagger)
+
+A complete OpenAPI 3.0 specification for the system has been designed using **Swagger Hub**. 
+
+The exported `swagger.json` mapping file is included with this project. You can view the full live endpoints, required architectures, and token schemas by importing the `swagger.json` file directly into [Swagger Editor](https://editor.swagger.io/), [Swagger Hub](https://app.swaggerhub.com/), or Postman.
+
 ---
 
 ## Architectural & Design Choices
