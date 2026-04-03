@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Translation extends Model
 {
@@ -160,6 +161,28 @@ class Translation extends Model
             'values.locale:id,code',
             'tags:id,name'
         ]);
+    }
+
+    public function exportTranslation()
+    {
+        return Cache::remember('translations_export', now()->addHours(24), function () {
+            
+            // One single query fetches everything, joined together
+            $allTranslations = DB::table('translation_values')
+                ->join('translations', 'translations.id', '=', 'translation_values.translation_id')
+                ->join('locales', 'locales.id', '=', 'translation_values.locale_id')
+                ->select('locales.code', 'translations.key', 'translation_values.value')
+                ->get();
+
+            $export = [];
+
+            // Loop through the results in RAM (instantly) instead of querying the DB
+            foreach ($allTranslations as $row) {
+                $export[$row->code][$row->key] = $row->value;
+            }
+
+            return $export;
+        });
     }
 
     private function getOrCreateTags(array $tagNames): array

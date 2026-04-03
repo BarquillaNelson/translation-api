@@ -37,7 +37,14 @@ This project is fully containerized with Docker, meaning you do not need PHP, Co
    - Database migrations are automatically executed against the MySQL container.
    - Caches are cleared and storage permissions are automatically fixed.
 
-5. **Access the API**:
+5. **Seed the Database (Optional)**:
+   To populate the database with a massive dataset (100,000 translation records) for performance testing, run the following command to execute the `TranslationSeeder`:
+   ```bash
+   docker-compose exec php php artisan db:seed
+   ```
+   *(Note: This seeder performs high-speed bulk inserts and typically completes in under 10 seconds, depending on your system configuration. It is highly recommended to run this before testing the high-concurrency caching logic.)*
+
+6. **Access the API**:
    The API is now running and accessible at: **http://localhost:8080**
    
    *Example:*
@@ -46,7 +53,7 @@ This project is fully containerized with Docker, meaning you do not need PHP, Co
    # Response: {"message": "API is running"}
    ```
 
-6. **Running Unit Tests**:
+7. **Running Unit Tests**:
    The codebase includes an extensive suite of automated tests. You can natively run the internal test suite to verify code conditions by executing PHPUnit via Docker:
    ```bash
    docker-compose exec php php artisan test

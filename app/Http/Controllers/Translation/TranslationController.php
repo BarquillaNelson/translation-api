@@ -54,4 +54,17 @@ class TranslationController extends BaseController
             return response()->json(['message' => 'Deleted successfully']);
         });
     }
+
+    public function export()
+    {
+        $data = $this->translationModel->exportTranslation();
+        $jsonContent = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+        return response()->streamDownload(function () use ($jsonContent) {
+            echo $jsonContent;
+        }, 'translations.json', [
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => 'attachment; filename="translations.json"',
+        ]);
+    }
 }

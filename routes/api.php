@@ -24,4 +24,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout']);
     
     Route::apiResource('translations', TranslationController::class);
+    Route::post('translations/export', [TranslationController::class, 'export']);
 });
