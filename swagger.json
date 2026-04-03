@@ -326,7 +326,7 @@
       }
     },
     "/translations/export" : {
-      "password_confirmation" : {
+      "post" : {
         "summary" : "Translation - Export",
         "deprecated" : false,
         "description" : "Downloads a JSON file containing all cached translations grouped by locale.",
